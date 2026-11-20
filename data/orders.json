@@ -1,0 +1,8 @@
+[
+  {"id_pedido": "EH-1001", "email": "laura.martinez@example.com", "id_evento": "EV001", "cantidad": 2, "estado": "pagado", "fecha_compra": "2026-10-15T10:24:00"},
+  {"id_pedido": "EH-1002", "email": "carlos.ruiz@example.com", "id_evento": "EV005", "cantidad": 4, "estado": "enviado", "fecha_compra": "2026-10-20T17:02:00"},
+  {"id_pedido": "EH-1003", "email": "ana.gomez@example.com", "id_evento": "EV013", "cantidad": 1, "estado": "pagado", "fecha_compra": "2026-09-30T09:45:00"},
+  {"id_pedido": "EH-1004", "email": "javier.lopez@example.com", "id_evento": "EV007", "cantidad": 3, "estado": "reembolsado", "fecha_compra": "2026-08-12T13:10:00"},
+  {"id_pedido": "EH-1005", "email": "marta.sanchez@example.com", "id_evento": "EV010", "cantidad": 2, "estado": "pagado", "fecha_compra": "2026-11-02T20:31:00"},
+  {"id_pedido": "EH-1006", "email": "pablo.diaz@example.com", "id_evento": "EV009", "cantidad": 2, "estado": "cancelado", "fecha_compra": "2026-10-05T12:00:00"}
+]

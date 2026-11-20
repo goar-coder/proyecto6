@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eventhub-v4"
+version = "0.4.0"
+description = "Asistente de atención al cliente de EventHub con LangGraph: nodo de herramientas, arista condicional y límite de pasos."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain-core==1.7.6",
+    "langchain-openai==1.7.4",
+    "langgraph==1.2.20",
+    "langgraph-checkpoint==4.3.1",
+    "openai==3.46.0",
+    "python-dotenv==1.2.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0"]
+
+[project.scripts]
+eventhub-v4 = "eventhub_v4.grafos.v4_herramientas:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]

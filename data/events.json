@@ -1,0 +1,146 @@
+[
+  {
+    "id": "EV001",
+    "nombre": "Noche de Rock en el Turia",
+    "ciudad": "Valencia",
+    "categoria": "concierto",
+    "fecha": "2026-12-05T21:00:00",
+    "precio": 35.0,
+    "disponibles": 120
+  },
+  {
+    "id": "EV002",
+    "nombre": "Jazz al Atardecer",
+    "ciudad": "Valencia",
+    "categoria": "concierto",
+    "fecha": "2026-12-12T19:30:00",
+    "precio": 22.5,
+    "disponibles": 40
+  },
+  {
+    "id": "EV003",
+    "nombre": "Gran Gala Sinfónica de Año Nuevo",
+    "ciudad": "Valencia",
+    "categoria": "concierto",
+    "fecha": "2027-01-01T20:00:00",
+    "precio": 60.0,
+    "disponibles": 0
+  },
+  {
+    "id": "EV004",
+    "nombre": "Indie Fest Valencia",
+    "ciudad": "Valencia",
+    "categoria": "concierto",
+    "fecha": "2027-02-14T18:00:00",
+    "precio": 45.0,
+    "disponibles": 300
+  },
+  {
+    "id": "EV005",
+    "nombre": "La Casa de Bernarda Alba",
+    "ciudad": "Valencia",
+    "categoria": "teatro",
+    "fecha": "2026-12-18T20:30:00",
+    "precio": 28.0,
+    "disponibles": 75
+  },
+  {
+    "id": "EV006",
+    "nombre": "Valencia Basket vs. Real Madrid",
+    "ciudad": "Valencia",
+    "categoria": "deporte",
+    "fecha": "2026-12-20T18:00:00",
+    "precio": 40.0,
+    "disponibles": 500
+  },
+  {
+    "id": "EV007",
+    "nombre": "Flamenco en Vivo",
+    "ciudad": "Sevilla",
+    "categoria": "concierto",
+    "fecha": "2026-12-10T21:30:00",
+    "precio": 30.0,
+    "disponibles": 60
+  },
+  {
+    "id": "EV008",
+    "nombre": "Don Juan Tenorio",
+    "ciudad": "Madrid",
+    "categoria": "teatro",
+    "fecha": "2026-11-28T19:00:00",
+    "precio": 32.0,
+    "disponibles": 90
+  },
+  {
+    "id": "EV009",
+    "nombre": "Derbi Madrileño",
+    "ciudad": "Madrid",
+    "categoria": "deporte",
+    "fecha": "2027-01-17T21:00:00",
+    "precio": 85.0,
+    "disponibles": 0
+  },
+  {
+    "id": "EV010",
+    "nombre": "Electro Night Barcelona",
+    "ciudad": "Barcelona",
+    "categoria": "concierto",
+    "fecha": "2026-12-31T23:00:00",
+    "precio": 55.0,
+    "disponibles": 800
+  },
+  {
+    "id": "EV011",
+    "nombre": "Monólogos de Humor",
+    "ciudad": "Málaga",
+    "categoria": "comedia",
+    "fecha": "2026-12-03T21:00:00",
+    "precio": 18.0,
+    "disponibles": 150
+  },
+  {
+    "id": "EV012",
+    "nombre": "El Lago de los Cisnes",
+    "ciudad": "Barcelona",
+    "categoria": "danza",
+    "fecha": "2027-01-24T19:00:00",
+    "precio": 48.0,
+    "disponibles": 35
+  },
+  {
+    "id": "EV013",
+    "nombre": "Rock en la Gran Vía",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2026-12-11T21:00:00",
+    "precio": 38.0,
+    "disponibles": 150
+  },
+  {
+    "id": "EV014",
+    "nombre": "Coros de Navidad en el Retiro",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2026-12-19T19:00:00",
+    "precio": 25.0,
+    "disponibles": 80
+  },
+  {
+    "id": "EV015",
+    "nombre": "Sinfonía de Invierno",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2026-12-27T20:00:00",
+    "precio": 55.0,
+    "disponibles": 0
+  },
+  {
+    "id": "EV016",
+    "nombre": "Pop Madrid Live",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2027-01-22T20:30:00",
+    "precio": 42.0,
+    "disponibles": 200
+  }
+]

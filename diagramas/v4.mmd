@@ -1,0 +1,20 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	chatbot(chatbot)
+	herramientas(herramientas)
+	limite(limite)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> chatbot;
+	chatbot -. &nbsp;fin&nbsp; .-> __end__;
+	chatbot -. &nbsp;usar_herramientas&nbsp; .-> herramientas;
+	chatbot -. &nbsp;limite_alcanzado&nbsp; .-> limite;
+	herramientas --> chatbot;
+	limite --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
