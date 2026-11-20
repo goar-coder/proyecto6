@@ -16,18 +16,25 @@ Herramientas reutilizadas de la sesión 4: buscar_eventos y consultar_pedido
 (eventhub_v4/tools/eventhub_tools.py). El grafo se compila con un checkpointer
 InMemorySaver: cada conversación (hilo) guarda su historial con un thread_id.
 
+Observabilidad (sesión 6): el prompt de sistema se descarga de Langfuse Prompt
+Management (etiqueta `production`) y cada turno se traza en Langfuse con session_id
+(= thread_id), user_id y tags. LangSmith traza solo con sus variables de entorno.
+
 Uso:  python -m eventhub_v4        (o el comando instalado: eventhub-v4)
 """
 
 import json
 from typing import Literal
 
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage, ToolMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, MessagesState, StateGraph
 
-from eventhub_v4.grafos.comun import guardar_diagrama, prompt_sistema
+from eventhub_v4.config.settings import usuario_por_defecto
+from eventhub_v4.grafos.comun import guardar_diagrama
 from eventhub_v4.llm.models import crear_modelo
+from eventhub_v4.llm.prompt_gestionado import PromptSistema, obtener_prompt
+from eventhub_v4.observabilidad import config_langchain, flush, traza_turno
 from eventhub_v4.tools.eventhub_tools import buscar_eventos, consultar_pedido
 
 HERRAMIENTAS = [buscar_eventos, consultar_pedido]
@@ -58,14 +65,22 @@ def _ultimo_ai(estado: EstadoV4) -> AIMessage | None:
     return ultimo if isinstance(ultimo, AIMessage) else None
 
 
-def construir_grafo(modelo=None, checkpointer=None):
+def construir_grafo(modelo=None, checkpointer=None, prompt: PromptSistema | None = None):
+    """Compila el grafo. `prompt` es el prompt de sistema; si no se pasa, se descarga de
+    Langfuse con la etiqueta configurada (por defecto `production`)."""
+    prompt = prompt or obtener_prompt()
     modelo_con_herramientas = (modelo or crear_modelo()).bind_tools(HERRAMIENTAS)
-    mensaje_sistema = SystemMessage(prompt_sistema(con_herramientas=True))
+
+    # ChatPromptTemplate (sistema + historial) con `langfuse_prompt` en su metadata: el
+    # CallbackHandler de Langfuse enlaza la generation siguiente con la versión del prompt.
+    cadena_chatbot = (prompt.plantilla_chat() | modelo_con_herramientas).with_config(
+        run_name="generar-respuesta"  # nombre estable y en forma verbal en vez de "RunnableSequence"
+    )
 
     # --- Nodos ---------------------------------------------------------------
 
     def chatbot(estado: EstadoV4) -> dict:
-        respuesta = modelo_con_herramientas.invoke([mensaje_sistema, *estado["messages"]])
+        respuesta = cadena_chatbot.invoke({"messages": estado["messages"]})
         return {"messages": [respuesta]}
 
     def herramientas(estado: EstadoV4) -> dict:
@@ -149,29 +164,56 @@ def formatear_estado(grafo, thread_id: str) -> str:
     return "\n".join(lineas)
 
 
-def enviar(grafo, thread_id: str, texto: str) -> dict:
+def enviar(
+    grafo,
+    thread_id: str,
+    texto: str,
+    usuario: str | None = None,
+    tags: list[str] | None = None,
+    metadata: dict | None = None,
+) -> dict:
     """Un turno de conversación. Devuelve la respuesta, las herramientas llamadas
-    en este turno (en orden) y cuántas rondas de herramientas hubo."""
-    config = config_hilo(thread_id)
+    en este turno (en orden) y cuántas rondas de herramientas hubo.
+
+    Cada turno es una traza `responder-mensaje` (input = texto del usuario, output = respuesta)
+    con session_id = thread_id, user_id = usuario y `tags`; la conversación es la sesión."""
+    config = config_langchain(thread_id, usuario=usuario, tags=tags, metadata=metadata)
     previos = len(grafo.get_state(config).values.get("messages", []))
-    # pasos=0 reinicia el contador en cada turno (sin reducer, el valor nuevo sustituye al guardado).
-    estado = grafo.invoke({"messages": [HumanMessage(texto)], "pasos": 0}, config)
-    nuevos: list[BaseMessage] = estado["messages"][previos:]
-    return {
-        "respuesta": estado["messages"][-1].text,
-        "herramientas": [
-            {"nombre": tc["name"], "argumentos": tc["args"]}
-            for m in nuevos if isinstance(m, AIMessage) for tc in m.tool_calls
-        ],
-        "pasos": estado["pasos"],
-    }
+    with traza_turno(thread_id, texto, usuario=usuario, tags=tags, metadata=metadata) as raiz:
+        # pasos=0 reinicia el contador en cada turno (sin reducer, el valor nuevo sustituye al guardado).
+        estado = grafo.invoke({"messages": [HumanMessage(texto)], "pasos": 0}, config)
+        nuevos: list[BaseMessage] = estado["messages"][previos:]
+        resultado = {
+            "respuesta": estado["messages"][-1].text,
+            "herramientas": [
+                {"nombre": tc["name"], "argumentos": tc["args"]}
+                for m in nuevos if isinstance(m, AIMessage) for tc in m.tool_calls
+            ],
+            "pasos": estado["pasos"],
+        }
+        if raiz is not None:
+            raiz.update(output=resultado["respuesta"], metadata={
+                "herramientas": [h["nombre"] for h in resultado["herramientas"]],
+                "pasos": resultado["pasos"],
+                "limite_alcanzado": resultado["respuesta"] == MENSAJE_LIMITE,
+            })
+    return resultado
 
 
 def main() -> None:
-    grafo = construir_grafo()
+    prompt = obtener_prompt()
+    grafo = construir_grafo(prompt=prompt)
     print(f"Diagrama guardado en {guardar_diagrama(grafo, 'v4')}")
-    hilo = "hilo-1"
-    print("Asistente EventHub (v4, con herramientas). Comandos: /hilo <id>, /historial, salir.")
+    hilo, usuario = "hilo-1", usuario_por_defecto()
+    print(f"Asistente EventHub (v4, con herramientas, {prompt.etiqueta}). "
+          "Comandos: /hilo <id>, /usuario <id>, /historial, salir.")
+    try:
+        _bucle(grafo, prompt, hilo, usuario)
+    finally:
+        flush()
+
+
+def _bucle(grafo, prompt: PromptSistema, hilo: str, usuario: str) -> None:
     while True:
         try:
             texto = input(f"\n[{hilo}] Tú: ").strip()
@@ -182,10 +224,14 @@ def main() -> None:
         if texto.startswith("/hilo"):
             hilo = texto.removeprefix("/hilo").strip() or hilo
             print(f"Ahora en el hilo {hilo!r}")
+        elif texto.startswith("/usuario"):
+            usuario = texto.removeprefix("/usuario").strip() or usuario
+            print(f"Usuario de las trazas: {usuario!r}")
         elif texto == "/historial":
             print(formatear_estado(grafo, hilo))
         elif texto:
-            r = enviar(grafo, hilo, texto)
+            r = enviar(grafo, hilo, texto, usuario=usuario, tags=["cli"],
+                       metadata={"prompt_version": prompt.etiqueta})
             for h in r["herramientas"]:
                 print(f"  ↳ {h['nombre']}({json.dumps(h['argumentos'], ensure_ascii=False)})")
             print(f"Asistente: {r['respuesta']}")

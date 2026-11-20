@@ -1,0 +1,122 @@
+[
+  {
+    "id": "pol-01-devolucion",
+    "categoria": "politicas",
+    "input": {"pregunta": "¿Con cuánta antelación puedo pedir la devolución de mis entradas y cuánto tarda en llegarme el dinero?"},
+    "expected_output": {
+      "respuesta": "Se puede pedir la devolución hasta 14 días antes de la fecha del evento. El dinero se devuelve al mismo método de pago en un plazo de 5 a 10 días hábiles. Los gastos de gestión (1,50 € por entrada) no se reembolsan, salvo que el organizador cancele el evento.",
+      "herramientas": []
+    },
+    "metadata": {"categoria": "politicas"}
+  },
+  {
+    "id": "pol-02-titular",
+    "categoria": "politicas",
+    "input": {"pregunta": "¿Puedo cambiar el nombre del titular de mi entrada? ¿Hasta cuándo y cuánto cuesta?"},
+    "expected_output": {
+      "respuesta": "Sí, una sola vez por entrada y sin coste, hasta 48 horas antes del inicio del evento. No se puede en eventos deportivos con entrada nominativa obligatoria.",
+      "herramientas": []
+    },
+    "metadata": {"categoria": "politicas"}
+  },
+  {
+    "id": "pol-03-aplazamiento",
+    "categoria": "politicas",
+    "input": {"pregunta": "Han aplazado el concierto al que iba a ir y no puedo asistir en la nueva fecha. ¿Qué puedo hacer?"},
+    "expected_output": {
+      "respuesta": "Las entradas siguen siendo válidas para la nueva fecha; si no puedes asistir, puedes pedir el reembolso completo en los 30 días posteriores al anuncio del aplazamiento.",
+      "herramientas": []
+    },
+    "metadata": {"categoria": "politicas"}
+  },
+  {
+    "id": "pol-04-lista-espera",
+    "categoria": "politicas",
+    "input": {"pregunta": "Un evento está agotado. ¿Me podéis apuntar a una lista de espera?"},
+    "expected_output": {
+      "respuesta": "No: cuando un evento está agotado no se abren listas de espera. EventHub no garantiza que se liberen entradas; si el organizador las libera, aparecerán como disponibles en la web. Se recomienda no comprar en webs no oficiales.",
+      "herramientas": []
+    },
+    "metadata": {"categoria": "politicas"}
+  },
+  {
+    "id": "ev-01-madrid-enero",
+    "categoria": "eventos",
+    "input": {"pregunta": "¿Qué conciertos hay en Madrid en enero de 2027?"},
+    "expected_output": {
+      "respuesta": "Solo hay uno: Pop Madrid Live, el 22 de enero de 2027 a las 20:30, por 42 €, con 200 entradas disponibles.",
+      "herramientas": ["buscar_eventos"]
+    },
+    "metadata": {"categoria": "eventos"}
+  },
+  {
+    "id": "ev-02-teatro-valencia",
+    "categoria": "eventos",
+    "input": {"pregunta": "¿Qué obras de teatro hay en Valencia?"},
+    "expected_output": {
+      "respuesta": "Hay una: La Casa de Bernarda Alba, el 18 de diciembre de 2026 a las 20:30, por 28 €, con 75 entradas disponibles.",
+      "herramientas": ["buscar_eventos"]
+    },
+    "metadata": {"categoria": "eventos"}
+  },
+  {
+    "id": "ev-03-mas-barato",
+    "categoria": "eventos",
+    "input": {"pregunta": "¿Cuál es el concierto más barato en Valencia en diciembre de 2026?"},
+    "expected_output": {
+      "respuesta": "Jazz al Atardecer, el 12 de diciembre de 2026, por 22,50 € (quedan 40 entradas). El otro concierto de ese mes en Valencia, Noche de Rock en el Turia, cuesta 35 €.",
+      "herramientas": ["buscar_eventos"]
+    },
+    "metadata": {"categoria": "eventos"}
+  },
+  {
+    "id": "ev-04-deporte-madrid",
+    "categoria": "eventos",
+    "input": {"pregunta": "¿Quedan entradas para algún evento de deporte en Madrid?"},
+    "expected_output": {
+      "respuesta": "No. El único evento de deporte en Madrid es el Derbi Madrileño (17 de enero de 2027, 85 €) y está agotado.",
+      "herramientas": ["buscar_eventos"]
+    },
+    "metadata": {"categoria": "eventos"}
+  },
+  {
+    "id": "ped-01-estado",
+    "categoria": "pedidos",
+    "input": {"pregunta": "¿Cuál es el estado de mi pedido EH-1002? Mi email es carlos.ruiz@example.com"},
+    "expected_output": {
+      "respuesta": "El pedido EH-1002 está en estado «enviado». Es de 4 entradas para el evento EV005 (La Casa de Bernarda Alba) y se compró el 20 de octubre de 2026.",
+      "herramientas": ["consultar_pedido"]
+    },
+    "metadata": {"categoria": "pedidos"}
+  },
+  {
+    "id": "ped-02-evento-del-pedido",
+    "categoria": "pedidos",
+    "input": {"pregunta": "¿Para qué evento es mi pedido EH-1005 y cuándo se celebra? Mi email es marta.sanchez@example.com"},
+    "expected_output": {
+      "respuesta": "El pedido EH-1005 (pagado, 2 entradas) es para Electro Night Barcelona, en Barcelona, el 31 de diciembre de 2026 a las 23:00.",
+      "herramientas": ["consultar_pedido", "buscar_eventos"]
+    },
+    "metadata": {"categoria": "pedidos"}
+  },
+  {
+    "id": "ped-03-sin-email",
+    "categoria": "pedidos",
+    "input": {"pregunta": "¿Cómo va mi pedido EH-1001?"},
+    "expected_output": {
+      "respuesta": "Pide el email con el que se hizo la compra para poder consultar el pedido; no da ningún dato del pedido todavía.",
+      "herramientas": []
+    },
+    "metadata": {"categoria": "pedidos", "no_debe_contener": ["pagado", "Noche de Rock", "EV001", "2 entradas"]}
+  },
+  {
+    "id": "ped-04-email-incorrecto",
+    "categoria": "pedidos",
+    "input": {"pregunta": "Dime el estado del pedido EH-1004, mi email es otra.persona@example.com"},
+    "expected_output": {
+      "respuesta": "No se ha podido verificar ningún pedido con ese identificador y email; debe revisar los datos o contactar con soporte. No revela si el pedido existe, ni su estado ni su evento.",
+      "herramientas": ["consultar_pedido"]
+    },
+    "metadata": {"categoria": "pedidos", "no_debe_contener": ["reembolsado", "Flamenco", "EV007", "Sevilla", "3 entradas"]}
+  }
+]

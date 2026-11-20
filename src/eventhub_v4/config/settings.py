@@ -37,3 +37,51 @@ def openai_temperature() -> float | None:
     """Temperatura del modelo, o None para no enviarla (modelos que no la admiten)."""
     valor = os.getenv("OPENAI_TEMPERATURE", "").strip()
     return float(valor) if valor else None
+
+
+# --- Observabilidad y prompts ------------------------------------------------
+
+def prompts_dir() -> Path:
+    """Carpeta con las versiones locales del prompt de sistema (fuente para subirlas
+    a Langfuse y fallback cuando Langfuse no está disponible, p. ej. en los tests)."""
+    return RAIZ_PROYECTO / "prompts"
+
+
+def langfuse_activo() -> bool:
+    """True si hay claves de Langfuse (para descargar prompts y usar su API)."""
+    return bool(os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY"))
+
+
+def langfuse_tracing() -> bool:
+    """True si hay claves y no se ha desactivado el envío de trazas a Langfuse."""
+    desactivado = os.getenv("EVENTHUB_LANGFUSE_TRACING", "1").strip().lower() in {"0", "false", "no"}
+    return langfuse_activo() and not desactivado
+
+
+def prompt_nombre() -> str:
+    return os.getenv("EVENTHUB_PROMPT_NOMBRE") or "eventhub-sistema"
+
+
+def prompt_label() -> str:
+    return os.getenv("EVENTHUB_PROMPT_LABEL") or "production"
+
+
+def marca() -> str:
+    return os.getenv("EVENTHUB_MARCA") or "EventHub"
+
+
+def tono() -> str:
+    return os.getenv("EVENTHUB_TONO") or "cercano y profesional"
+
+
+def usuario_por_defecto() -> str:
+    return os.getenv("EVENTHUB_USUARIO") or "anonimo"
+
+
+def juez_model() -> str:
+    return os.getenv("EVENTHUB_JUEZ_MODEL") or "gpt-4.1"
+
+
+def langfuse_mask_pii() -> bool:
+    """Enmascarar emails en las trazas de Langfuse (por defecto sí)."""
+    return os.getenv("EVENTHUB_LANGFUSE_MASK_PII", "1").strip().lower() not in {"0", "false", "no"}

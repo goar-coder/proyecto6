@@ -8,6 +8,16 @@ from langchain_core.messages import AIMessage
 DATA_ORIGINAL = Path(__file__).resolve().parent.parent / "data"
 
 
+@pytest.fixture(autouse=True)
+def sin_observabilidad(monkeypatch):
+    """Los tests nunca envían trazas ni descargan prompts, aunque .env tenga claves."""
+    monkeypatch.setenv("EVENTHUB_LANGFUSE_TRACING", "0")
+    monkeypatch.delenv("LANGFUSE_PUBLIC_KEY", raising=False)
+    monkeypatch.delenv("LANGFUSE_SECRET_KEY", raising=False)
+    monkeypatch.setenv("LANGSMITH_TRACING", "false")
+    monkeypatch.delenv("LANGCHAIN_TRACING_V2", raising=False)
+
+
 @pytest.fixture
 def datos_temporales(tmp_path, monkeypatch):
     """Copia data/ a una carpeta temporal y apunta EVENTHUB_DATA_DIR a ella,
