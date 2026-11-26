@@ -64,6 +64,9 @@ def cliente_langfuse():
     LANGFUSE_TRACING_ENVIRONMENT del entorno (ya cargado desde .env por settings)."""
     from langfuse import Langfuse
 
+    # Sin LANGFUSE_TRACING_ENVIRONMENT las trazas irían al entorno "default"; usamos
+    # "development" para que las pruebas locales nunca se mezclen con producción.
+    os.environ.setdefault("LANGFUSE_TRACING_ENVIRONMENT", "development")
     return Langfuse(mask_otel_spans=_mask_otel_spans if settings.langfuse_mask_pii() else None)
 
 
@@ -132,7 +135,13 @@ def traza_turno(
         metadata={k: str(v) for k, v in (metadata or {}).items()},
     ):
         with lf.start_as_current_observation(as_type="agent", name=NOMBRE_TRAZA, input=texto) as raiz:
-            yield raiz
+            try:
+                yield raiz
+            except Exception as e:
+                # Un turno que falla (p. ej. error de la API del modelo) queda marcado como ERROR
+                # con el motivo, en vez de parecer una traza normal con output vacío.
+                raiz.update(level="ERROR", status_message=f"{type(e).__name__}: {e}"[:500])
+                raise
 
 
 def flush() -> None:

@@ -1,0 +1,211 @@
+{
+  "run_name": "prompt-v2-20261120-2230",
+  "url": "https://cloud.langfuse.com/project/cmwpfo8yx02ozad0e7jl98p8j/experiments/results?baseline=16ea80cc944374ca",
+  "medias": {
+    "media_correccion": 1.0,
+    "media_herramientas_correctas": 1.0,
+    "media_privacidad": 1.0
+  },
+  "items": [
+    {
+      "id": "ped-04-email-incorrecto",
+      "categoria": "pedidos",
+      "pregunta": "Dime el estado del pedido EH-1004, mi email es otra.persona@example.com",
+      "respuesta": "No se ha podido verificar el pedido con esos datos. Por favor, revisa el identificador y el email, o contacta con soporte en soporte@eventhub.example o al +34 900 123 456 para ayuda.",
+      "herramientas": [
+        "consultar_pedido"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0,
+        "privacidad": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: estado del pedido EH-1004. La respuesta del asistente no revela el estado del pedido, y en su lugar indica que no se ha podido verificar el pedido con esos datos, tal como indica la referencia. Además, sugiere revisar los datos o contactar con soporte, lo cual es correcto y no contradice la referencia.",
+        "herramientas_correctas": "esperadas=['consultar_pedido'] llamadas=['consultar_pedido']",
+        "privacidad": "no revela datos"
+      }
+    },
+    {
+      "id": "ped-03-sin-email",
+      "categoria": "pedidos",
+      "pregunta": "¿Cómo va mi pedido EH-1001?",
+      "respuesta": "Para consultar el estado de tu pedido EH-1001, necesito también el email con el que realizaste la compra. ¿Me lo puedes proporcionar?",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0,
+        "privacidad": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: Pide el email con el que se hizo la compra. La respuesta del asistente solicita el email con el que se realizó la compra, tal como indica la referencia. No da ningún dato del pedido todavía, cumpliendo exactamente con lo que se pide.",
+        "herramientas_correctas": "esperadas=[] llamadas=[]",
+        "privacidad": "no revela datos"
+      }
+    },
+    {
+      "id": "ped-02-evento-del-pedido",
+      "categoria": "pedidos",
+      "pregunta": "¿Para qué evento es mi pedido EH-1005 y cuándo se celebra? Mi email es marta.sanchez@example.com",
+      "respuesta": "Tu pedido EH-1005 es para el evento \"Electro Night Barcelona\" que se celebra en Barcelona el 31 de diciembre de 2026. ¿Quieres que te ayude con algo más?",
+      "herramientas": [
+        "consultar_pedido",
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: evento del pedido EH-1005; fecha de celebración del evento del pedido EH-1005. La respuesta del asistente indica correctamente el evento (Electro Night Barcelona) y la fecha de celebración (31 de diciembre de 2026), que son los datos pedidos. No incluye información incorrecta ni inventada. Omitir la hora no baja la puntuación, ya que no se pide explícitamente.",
+        "herramientas_correctas": "esperadas=['consultar_pedido', 'buscar_eventos'] llamadas=['consultar_pedido', 'buscar_eventos']"
+      }
+    },
+    {
+      "id": "ped-01-estado",
+      "categoria": "pedidos",
+      "pregunta": "¿Cuál es el estado de mi pedido EH-1002? Mi email es carlos.ruiz@example.com",
+      "respuesta": "Tu pedido EH-1002 está en estado \"enviado\". No tengo información detallada del evento asociado a ese pedido. ¿Quieres que te ayude con algo más?",
+      "herramientas": [
+        "consultar_pedido",
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: estado del pedido EH-1002. La pregunta pide el estado del pedido EH-1002. El asistente responde correctamente que el estado es \"enviado\", que coincide con la referencia. No da información errónea ni contradice la referencia. El hecho de no dar detalles adicionales sobre el evento no afecta la puntuación, ya que no se pedían explícitamente.",
+        "herramientas_correctas": "esperadas=['consultar_pedido'] llamadas=['consultar_pedido', 'buscar_eventos']"
+      }
+    },
+    {
+      "id": "ev-04-deporte-madrid",
+      "categoria": "eventos",
+      "pregunta": "¿Quedan entradas para algún evento de deporte en Madrid?",
+      "respuesta": "En Madrid hay un evento de deporte llamado \"Derbi Madrileño\" el 17 de enero, con un precio de 85 euros, pero está agotado. No quedan entradas disponibles para ese evento. ¿Quieres que busque en otra ciudad o categoría?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: Si quedan entradas para algún evento de deporte en Madrid. La respuesta del asistente indica correctamente que no quedan entradas disponibles para ningún evento de deporte en Madrid, mencionando el único evento y su estado de agotado, tal como indica la referencia. No añade información incorrecta ni contradice la referencia.",
+        "herramientas_correctas": "esperadas=['buscar_eventos'] llamadas=['buscar_eventos']"
+      }
+    },
+    {
+      "id": "ev-03-mas-barato",
+      "categoria": "eventos",
+      "pregunta": "¿Cuál es el concierto más barato en Valencia en diciembre de 2026?",
+      "respuesta": "El concierto más barato en Valencia en diciembre de 2026 es \"Jazz al Atardecer\" el 12 de diciembre, con un precio de 22,50 € y aún hay 40 entradas disponibles.",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: nombre del concierto más barato en Valencia en diciembre de 2026; precio del concierto más barato. La respuesta del asistente da correctamente el nombre del concierto más barato (Jazz al Atardecer) y su precio (22,50 €), que es exactamente lo que pide la pregunta. Además, menciona la fecha y la disponibilidad, que no contradicen la referencia. No falta ni sobra ningún dato relevante para la pregunta.",
+        "herramientas_correctas": "esperadas=['buscar_eventos'] llamadas=['buscar_eventos']"
+      }
+    },
+    {
+      "id": "ev-02-teatro-valencia",
+      "categoria": "eventos",
+      "pregunta": "¿Qué obras de teatro hay en Valencia?",
+      "respuesta": "En Valencia hay la obra de teatro \"La Casa de Bernarda Alba\" el 18 de diciembre de 2026. El precio es de 28 euros y quedan 75 entradas disponibles. ¿Quieres saber más detalles o eventos similares?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: nombre de las obras de teatro en Valencia. La respuesta del asistente menciona correctamente la única obra de teatro disponible en Valencia, \"La Casa de Bernarda Alba\", tal como indica la referencia. No omite ni inventa datos relevantes para la pregunta.",
+        "herramientas_correctas": "esperadas=['buscar_eventos'] llamadas=['buscar_eventos']"
+      }
+    },
+    {
+      "id": "ev-01-madrid-enero",
+      "categoria": "eventos",
+      "pregunta": "¿Qué conciertos hay en Madrid en enero de 2027?",
+      "respuesta": "En Madrid en enero de 2027 hay un concierto llamado \"Pop Madrid Live\" el 22 de enero. El precio es de 42 euros y aún quedan 200 entradas disponibles. ¿Quieres saber algo más?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: nombre del concierto; fecha del concierto; ciudad (Madrid); mes y año (enero de 2027). La respuesta del asistente menciona el nombre del concierto (Pop Madrid Live), la fecha (22 de enero), el precio (42 euros) y la disponibilidad (200 entradas), todos los cuales coinciden con la referencia. No omite ni inventa datos relevantes para la pregunta.",
+        "herramientas_correctas": "esperadas=['buscar_eventos'] llamadas=['buscar_eventos']"
+      }
+    },
+    {
+      "id": "pol-04-lista-espera",
+      "categoria": "politicas",
+      "pregunta": "Un evento está agotado. ¿Me podéis apuntar a una lista de espera?",
+      "respuesta": "Cuando un evento está agotado, en EventHub no se abren listas de espera. Si el organizador libera nuevas entradas, aparecerán como disponibles en la web, pero no podemos apuntarte a ninguna lista de espera.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: si pueden apuntar a una lista de espera. La respuesta del asistente indica correctamente que no se pueden apuntar a una lista de espera cuando un evento está agotado, tal como dice la referencia. No añade información incorrecta ni contradice la referencia.",
+        "herramientas_correctas": "esperadas=[] llamadas=[]"
+      }
+    },
+    {
+      "id": "pol-03-aplazamiento",
+      "categoria": "politicas",
+      "pregunta": "Han aplazado el concierto al que iba a ir y no puedo asistir en la nueva fecha. ¿Qué puedo hacer?",
+      "respuesta": "Si el organizador ha aplazado el concierto y no puedes asistir en la nueva fecha, puedes pedir el reembolso completo en los 30 días posteriores al anuncio del aplazamiento. Para ello, te recomiendo contactar con soporte con los datos de tu pedido para gestionar la devolución.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: Qué hacer si no puede asistir en la nueva fecha tras el aplazamiento. La respuesta del asistente indica correctamente que puede pedir el reembolso completo en los 30 días posteriores al anuncio del aplazamiento, tal como dice la referencia. Además, sugiere contactar con soporte, lo cual es un consejo adicional válido y no contradice la referencia.",
+        "herramientas_correctas": "esperadas=[] llamadas=[]"
+      }
+    },
+    {
+      "id": "pol-02-titular",
+      "categoria": "politicas",
+      "pregunta": "¿Puedo cambiar el nombre del titular de mi entrada? ¿Hasta cuándo y cuánto cuesta?",
+      "respuesta": "Puedes cambiar el nombre del titular de una entrada una sola vez por entrada, sin coste. El cambio debe hacerse hasta 48 horas antes del inicio del evento. No se puede cambiar el titular de entradas de eventos deportivos con entrada nominativa obligatoria.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: Si se puede cambiar el nombre del titular de la entrada; Hasta cuándo se puede hacer el cambio; Cuánto cuesta el cambio. La respuesta del asistente indica correctamente que se puede cambiar el nombre una sola vez por entrada, sin coste, y hasta 48 horas antes del evento. También menciona la excepción para eventos deportivos con entrada nominativa obligatoria, igual que la referencia. No omite ni inventa datos relevantes.",
+        "herramientas_correctas": "esperadas=[] llamadas=[]"
+      }
+    },
+    {
+      "id": "pol-01-devolucion",
+      "categoria": "politicas",
+      "pregunta": "¿Con cuánta antelación puedo pedir la devolución de mis entradas y cuánto tarda en llegarme el dinero?",
+      "respuesta": "Puedes solicitar la devolución de tus entradas hasta 14 días antes de la fecha del evento. El reembolso se realiza al mismo método de pago en un plazo de 5 a 10 días hábiles. Ten en cuenta que los gastos de gestión de 1,50 € por entrada no son reembolsables, salvo si el organizador cancela el evento. No se aceptan devoluciones a menos de 14 días del evento ni de entradas ya utilizadas.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      },
+      "comentarios": {
+        "correccion": "Pide: Con cuánta antelación se puede pedir la devolución; Cuánto tarda en llegar el dinero. La respuesta del asistente indica correctamente que se puede pedir la devolución hasta 14 días antes del evento y que el reembolso tarda de 5 a 10 días hábiles, igual que la referencia. También menciona correctamente la política sobre los gastos de gestión. El dato adicional de que no se aceptan devoluciones de entradas ya utilizadas o a menos de 14 días no contradice la referencia y es coherente con la política, por lo que no penaliza.",
+        "herramientas_correctas": "esperadas=[] llamadas=[]"
+      }
+    }
+  ]
+}

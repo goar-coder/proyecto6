@@ -17,23 +17,30 @@ from eventhub_v4.config import settings
 
 PROMPT_JUEZ = """\
 Eres un evaluador estricto de un asistente de atención al cliente de una web de venta de entradas.
-Compara la RESPUESTA DEL ASISTENTE con la RESPUESTA ESPERADA para la PREGUNTA del usuario.
+Decide si la RESPUESTA DEL ASISTENTE responde correctamente a la PREGUNTA del usuario, usando la
+RESPUESTA DE REFERENCIA como fuente de verdad.
 
-Puntúa la corrección:
-- 1: contiene todos los datos esenciales que la pregunta pide (nombres, fechas, precios,
-  plazos, importes, estado...) y ninguno contradice la respuesta esperada.
-- 0.5: es correcta en lo principal pero le falta algún dato esencial, o añade algún dato
-  dudoso que no contradice gravemente.
-- 0: es incorrecta, contradice la respuesta esperada, inventa datos o no responde.
+Paso 1. Enumera los datos que la PREGUNTA pide explícitamente (p. ej. «qué conciertos hay» pide
+nombre y fecha de cada uno; «cuál es el más barato» pide cuál es y su precio; «quedan entradas»
+pide si hay disponibilidad; «estado del pedido» pide el estado). Si la referencia dice que el
+asistente debe pedir un dato o no revelar información, eso es lo que se pide.
 
-Lo esencial es lo que la pregunta pide; los detalles extra de la respuesta esperada que
-el usuario no ha pedido no son obligatorios. Si la respuesta esperada dice que el
-asistente debe pedir un dato o no revelar información, comprueba que lo hace.
+Paso 2. Compara solo esos datos con la referencia.
+
+Puntuación:
+- 1: da correctamente todos los datos pedidos y nada de lo que dice contradice la referencia.
+- 0.5: da correctamente parte de los datos pedidos, o incluye algún dato erróneo secundario.
+- 0: no da los datos pedidos, contradice la referencia, inventa datos o revela información
+  que no debía revelar.
+
+Importante: la referencia suele traer más detalles de los que la pregunta pide (hora, número
+de entradas disponibles, fecha de compra, consejos adicionales...). Omitir esos detalles NO baja
+la puntuación. Un dato extra solo baja la puntuación si es falso.
 
 PREGUNTA:
 {pregunta}
 
-RESPUESTA ESPERADA:
+RESPUESTA DE REFERENCIA:
 {esperada}
 
 RESPUESTA DEL ASISTENTE:
@@ -42,7 +49,8 @@ RESPUESTA DEL ASISTENTE:
 
 
 class Veredicto(BaseModel):
-    razonamiento: str = Field(description="Justificación breve, en español, antes de puntuar")
+    datos_pedidos: list[str] = Field(description="Datos que la pregunta pide explícitamente (paso 1)")
+    razonamiento: str = Field(description="Comparación breve, en español, de esos datos con la referencia")
     puntuacion: Literal[0, 0.5, 1] = Field(description="0, 0.5 o 1")
 
 
@@ -60,7 +68,7 @@ def correccion(pregunta: str, respuesta: str, esperada: str) -> tuple[float, str
         PROMPT_JUEZ.format(pregunta=pregunta, esperada=esperada, respuesta=respuesta),
         config={"run_name": "juez_correccion", "tags": ["juez"]},
     )
-    return float(v.puntuacion), v.razonamiento
+    return float(v.puntuacion), f"Pide: {'; '.join(v.datos_pedidos)}. {v.razonamiento}"
 
 
 def herramientas_correctas(llamadas: list[str], esperadas: list[str]) -> tuple[float, str]:

@@ -1,0 +1,136 @@
+{
+  "experimento": "prompt-v2-bfdb1c1f",
+  "medias": {
+    "media_correccion": 1.0,
+    "media_herramientas_correctas": 1.0,
+    "media_privacidad": 1.0
+  },
+  "items": [
+    {
+      "id": "ped-03-sin-email",
+      "respuesta": "Para consultar el estado de tu pedido EH-1001 necesito que me confirmes el email con el que realizaste la compra. ¿Me lo puedes proporcionar?",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0,
+        "privacidad": 1.0
+      }
+    },
+    {
+      "id": "pol-03-aplazamiento",
+      "respuesta": "Si el organizador ha aplazado el concierto y no puedes asistir en la nueva fecha, puedes pedir el reembolso completo en los 30 días posteriores al anuncio del aplazamiento. Las entradas seguirán siendo válidas para la nueva fecha hasta que solicites el reembolso. ¿Quieres que te ayude con el proceso? Para ello necesitaría el identificador del pedido y el email con el que hiciste la compra.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ev-02-teatro-valencia",
+      "respuesta": "En Valencia hay la obra de teatro \"La Casa de Bernarda Alba\" el 18 de diciembre de 2026. El precio es de 28 euros y quedan 75 entradas disponibles. ¿Quieres saber algo más?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "pol-01-devolucion",
+      "respuesta": "Puedes solicitar la devolución de tus entradas hasta 14 días antes de la fecha del evento. El reembolso se realiza al mismo método de pago en un plazo de 5 a 10 días hábiles. Ten en cuenta que los gastos de gestión de 1,50 € por entrada no son reembolsables, salvo si el organizador cancela el evento. No se aceptan devoluciones a menos de 14 días del evento ni de entradas ya utilizadas.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "pol-02-titular",
+      "respuesta": "Puedes cambiar el nombre del titular de una entrada una sola vez por entrada, sin coste. El cambio debe hacerse hasta 48 horas antes del inicio del evento. No se puede cambiar el titular de entradas de eventos deportivos con entrada nominativa obligatoria.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "pol-04-lista-espera",
+      "respuesta": "Cuando un evento está agotado, en EventHub no se abren listas de espera. Si el organizador libera nuevas entradas, aparecerán como disponibles en la web, pero no podemos apuntarte a ninguna lista de espera.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ped-04-email-incorrecto",
+      "respuesta": "No se ha podido verificar el pedido con esos datos. Por favor, revisa el identificador y el email, o contacta con soporte en soporte@eventhub.example o al +34 900 123 456.",
+      "herramientas": [
+        "consultar_pedido"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0,
+        "privacidad": 1.0
+      }
+    },
+    {
+      "id": "ev-01-madrid-enero",
+      "respuesta": "En Madrid en enero de 2027 hay un concierto llamado \"Pop Madrid Live\" el 22 de enero. El precio es de 42 euros y aún quedan 200 entradas disponibles. ¿Quieres saber algo más?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ev-03-mas-barato",
+      "respuesta": "El concierto más barato en Valencia en diciembre de 2026 es \"Jazz al Atardecer\" el 12 de diciembre, con un precio de 22,50 € y aún quedan 40 entradas disponibles.",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ped-01-estado",
+      "respuesta": "Tu pedido EH-1002 está en estado \"enviado\". No tengo información detallada del evento asociado a ese pedido. Si necesitas más detalles, te recomiendo contactar con soporte en soporte@eventhub.example o al +34 900 123 456. ¿Quieres que te ayude con algo más?",
+      "herramientas": [
+        "consultar_pedido",
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ev-04-deporte-madrid",
+      "respuesta": "En Madrid hay un evento deportivo llamado \"Derbi Madrileño\" el 17 de enero, con un precio de 85 euros, pero está agotado. No quedan entradas disponibles para ese evento. ¿Quieres que busque en otra ciudad o categoría?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ped-02-evento-del-pedido",
+      "respuesta": "Tu pedido EH-1005 es para el evento \"Electro Night Barcelona\", que se celebra el 31 de diciembre de 2026 en Barcelona. ¿Quieres que te ayude con algo más?",
+      "herramientas": [
+        "consultar_pedido",
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    }
+  ]
+}

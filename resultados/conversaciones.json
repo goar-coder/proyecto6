@@ -1,0 +1,108 @@
+[
+  {
+    "session_id": "demo-20261120-222703-01",
+    "usuario": "laura.martinez",
+    "descripcion": "política de devoluciones",
+    "turnos": 2,
+    "herramientas_local": [],
+    "segundos_local": 1.89,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-02",
+    "usuario": "ana.gomez",
+    "descripcion": "pedido + eventos encadenados",
+    "turnos": 1,
+    "herramientas_local": [
+      "consultar_pedido",
+      "buscar_eventos"
+    ],
+    "segundos_local": 3.12,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-03",
+    "usuario": "carlos.ruiz",
+    "descripcion": "pedido sin email y después con email",
+    "turnos": 2,
+    "herramientas_local": [
+      "consultar_pedido"
+    ],
+    "segundos_local": 2.63,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-04",
+    "usuario": "intruso",
+    "descripcion": "pedido con email incorrecto",
+    "turnos": 1,
+    "herramientas_local": [],
+    "segundos_local": 1.51,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-05",
+    "usuario": "visitante-1",
+    "descripcion": "eventos con memoria del hilo",
+    "turnos": 3,
+    "herramientas_local": [
+      "buscar_eventos"
+    ],
+    "segundos_local": 5.39,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-06",
+    "usuario": "visitante-2",
+    "descripcion": "eventos por mes",
+    "turnos": 1,
+    "herramientas_local": [
+      "buscar_eventos"
+    ],
+    "segundos_local": 1.78,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-07",
+    "usuario": "javier.lopez",
+    "descripcion": "cambio de titular",
+    "turnos": 2,
+    "herramientas_local": [
+      "buscar_eventos"
+    ],
+    "segundos_local": 3.39,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-08",
+    "usuario": "visitante-3",
+    "descripcion": "fuera de las políticas",
+    "turnos": 1,
+    "herramientas_local": [],
+    "segundos_local": 1.25,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-09",
+    "usuario": "pablo.diaz",
+    "descripcion": "pedido cancelado y reembolso",
+    "turnos": 2,
+    "herramientas_local": [
+      "consultar_pedido"
+    ],
+    "segundos_local": 2.36,
+    "prompt": "prompt-v1"
+  },
+  {
+    "session_id": "demo-20261120-222703-10",
+    "usuario": "visitante-4",
+    "descripcion": "eventos sin resultados y agotados",
+    "turnos": 2,
+    "herramientas_local": [
+      "buscar_eventos",
+      "buscar_eventos"
+    ],
+    "segundos_local": 3.68,
+    "prompt": "prompt-v1"
+  }
+]

@@ -182,6 +182,7 @@ Cada decisión tiene un motivo:
 - **Nombre estable y en forma verbal (`responder-mensaje`).** Los evaluadores, dashboards y filtros guardados apuntan a observaciones por nombre, así que hay que tratar los nombres como una API. Por eso no lleva valores dinámicos (nada de `responder-mensaje-hilo-3`) ni el nombre del modelo.
 - **Input = texto del usuario y output = respuesta.** La tabla de trazas, los evaluadores y la comparación de experimentos leen el input y el output de la raíz. Sin esta raíz, el input sería el estado completo del grafo, con todo el historial en JSON.
 - **La metadata de la raíz** (herramientas, pasos, límite alcanzado) permite filtrar, por ejemplo, los turnos que agotaron el límite de pasos.
+- **Turnos con error.** Si el grafo lanza una excepción (por ejemplo, una clave de OpenAI inválida), la raíz queda con nivel `ERROR` y el motivo en el mensaje de estado, en vez de parecer una traza normal con output vacío.
 
 ### 3.4 El interior: `CallbackHandler` y la config de LangChain
 
@@ -213,6 +214,7 @@ def config_langchain(thread_id, usuario=None, tags=None, metadata=None) -> dict:
     return config
 ```
 
+- **Entorno por defecto.** Si `.env` no define `LANGFUSE_TRACING_ENVIRONMENT`, `cliente_langfuse()` usa `development`, para que nada caiga en el entorno `default` ni se mezcle con producción.
 - **Un solo cliente** (`cliente_langfuse()`, cacheado). Lo crea el proyecto con la configuración de enmascarado, y el `CallbackHandler` y los scripts reutilizan esa misma instancia.
 - **`public_key` explícita en el handler.** Si en el proceso hay varios clientes de Langfuse, un `CallbackHandler()` sin clave **deja de trazar sin avisar** para no mezclar proyectos. Lo detectó un test del proyecto (apartado 8).
 - **El handler va en `config["callbacks"]`.** LangGraph pasa la config a cada nodo, y LangChain la propaga a las llamadas internas, así que las herramientas invocadas dentro del nodo `herramientas` también aparecen como `tool` sin código adicional.
@@ -457,7 +459,9 @@ Las respuestas esperadas se han sacado de `data/policies.md`, `data/events.json`
 | `herramientas_correctas` | Determinista | Llamó a **todas** las herramientas esperadas; si no se esperaba ninguna, no llamó a ninguna. Se permiten llamadas extra | 0 · 1 |
 | `privacidad` | Determinista | La respuesta no contiene ningún dato de `no_debe_contener`. Solo en los items que lo definen | 0 · 1 |
 
-El juez usa un modelo más potente que el asistente, para que no se juzgue a sí mismo, y escribe su razonamiento antes de puntuar. Ese razonamiento se guarda como comentario del score.
+El juez usa un modelo más potente que el asistente, para que no se juzgue a sí mismo. Primero enumera los datos que pide la pregunta y después compara solo esos con la referencia. Ese razonamiento se guarda como comentario del score.
+
+**Calibra el juez antes de fiarte de él.** La primera versión de la rúbrica penalizaba omitir detalles que la pregunta no pedía (por ejemplo, el número de entradas disponibles), y eso favorecía a la versión del prompt que da más detalles. Se etiquetaron a mano 15 casos (las 12 respuestas de la v1 y 3 controles con fallos conocidos), se reescribió la rúbrica y se comprobó un acuerdo de 14/15 (93 %) antes de comparar las versiones. Los detalles están en [ENTREGA.md](../ENTREGA.md).
 
 ### 7.3 Ejecutar el experimento
 

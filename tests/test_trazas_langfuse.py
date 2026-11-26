@@ -76,3 +76,22 @@ def test_generations_enlazadas_al_prompt_y_herramientas_como_tool(spans):
 def test_ningun_email_sin_enmascarar(spans):
     todo = json.dumps([dict(s.attributes) for s in spans], ensure_ascii=False, default=str)
     assert "ana.gomez@example.com" not in todo and "a***@example.com" in todo
+
+
+def test_turno_que_falla_queda_marcado_como_error(monkeypatch, datos_temporales):
+    from langfuse import Langfuse
+
+    monkeypatch.setenv("LANGFUSE_PUBLIC_KEY", f"pk-lf-test-{uuid.uuid4().hex[:8]}")
+    monkeypatch.setenv("LANGFUSE_SECRET_KEY", "sk-lf-test")
+    monkeypatch.setenv("LANGFUSE_BASE_URL", "http://127.0.0.1:9")
+    monkeypatch.setenv("EVENTHUB_LANGFUSE_TRACING", "1")
+    exportador = InMemorySpanExporter()
+    cliente = Langfuse(span_exporter=exportador)
+    monkeypatch.setattr(obs, "cliente_langfuse", lambda: cliente)
+    with pytest.raises(RuntimeError):
+        with obs.traza_turno("hilo-error", "hola"):
+            raise RuntimeError("API caída")
+    cliente.flush()
+    raiz = [s for s in exportador.get_finished_spans() if s.parent is None][0]
+    assert raiz.attributes["langfuse.observation.level"] == "ERROR"
+    assert "API caída" in raiz.attributes["langfuse.observation.status_message"]

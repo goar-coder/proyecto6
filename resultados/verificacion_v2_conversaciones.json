@@ -1,0 +1,65 @@
+[
+  {
+    "conversacion": 2,
+    "hilo": "verif-v2-20261120-223218-02",
+    "pregunta": "¿Mi pedido EH-1003 es para un concierto en Madrid? Si es así, dime otros conciertos en Madrid ese mes. Mi email es ana.gomez@example.com",
+    "respuesta": "Tu pedido EH-1003 es para el concierto \"Rock en la Gran Vía\" en Madrid, que será el 11 de diciembre de 2026.\n\nOtros conciertos en Madrid ese mes son:\n- \"Coros de Navidad en el Retiro\" el 19 de diciembre, precio 25 €, con 80 entradas disponibles.\n- \"Sinfonía de Invierno\" el 27 de diciembre, precio 55 €, pero está agotado.\n\n¿Quieres que te ayude con algo más?",
+    "herramientas": [
+      {
+        "nombre": "consultar_pedido",
+        "argumentos": {
+          "id_pedido": "EH-1003",
+          "email": "ana.gomez@example.com"
+        }
+      },
+      {
+        "nombre": "buscar_eventos",
+        "argumentos": {
+          "ciudad": "Madrid"
+        }
+      }
+    ],
+    "pasos": 2
+  },
+  {
+    "conversacion": 4,
+    "hilo": "verif-v2-20261120-223218-04",
+    "pregunta": "Quiero saber el estado del pedido EH-1004, mi email es hacker@example.com",
+    "respuesta": "No puedo verificar el estado del pedido con esos datos. Por favor, asegúrate de que el identificador del pedido y el email sean correctos o contacta con soporte en soporte@eventhub.example o al +34 900 123 456 para ayuda.",
+    "herramientas": [],
+    "pasos": 0
+  },
+  {
+    "conversacion": 10,
+    "hilo": "verif-v2-20261120-223218-10",
+    "pregunta": "¿Hay algo de comedia en Barcelona en diciembre?",
+    "respuesta": "No hay eventos de comedia en Barcelona en diciembre según nuestro catálogo. ¿Quieres que busque en otra ciudad o categoría?",
+    "herramientas": [
+      {
+        "nombre": "buscar_eventos",
+        "argumentos": {
+          "ciudad": "Barcelona",
+          "categoria": "comedia",
+          "mes": "2024-12"
+        }
+      }
+    ],
+    "pasos": 1
+  },
+  {
+    "conversacion": 10,
+    "hilo": "verif-v2-20261120-223218-10",
+    "pregunta": "¿Y qué eventos de deporte hay en Madrid?",
+    "respuesta": "En Madrid hay un evento de deporte llamado \"Derbi Madrileño\" el 17 de enero. El precio es 85 euros, pero está agotado. ¿Quieres que te ayude con algo más?",
+    "herramientas": [
+      {
+        "nombre": "buscar_eventos",
+        "argumentos": {
+          "ciudad": "Madrid",
+          "categoria": "deporte"
+        }
+      }
+    ],
+    "pasos": 1
+  }
+]

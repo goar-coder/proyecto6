@@ -1,0 +1,135 @@
+{
+  "experimento": "prompt-v1-1821ccd2",
+  "medias": {
+    "media_correccion": 0.9166666666666666,
+    "media_herramientas_correctas": 1.0,
+    "media_privacidad": 1.0
+  },
+  "items": [
+    {
+      "id": "ped-03-sin-email",
+      "respuesta": "Para consultar el estado de tu pedido EH-1001 necesito que me confirmes el email con el que realizaste la compra. ¿Me lo puedes proporcionar?",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0,
+        "privacidad": 1.0
+      }
+    },
+    {
+      "id": "pol-01-devolucion",
+      "respuesta": "Puedes solicitar la devolución de tus entradas hasta 14 días antes de la fecha del evento. El reembolso se realiza al mismo método de pago en un plazo de 5 a 10 días hábiles. Ten en cuenta que los gastos de gestión de 1,50 € por entrada no son reembolsables, salvo si el organizador cancela el evento.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "pol-03-aplazamiento",
+      "respuesta": "Si el concierto ha sido aplazado y no puedes asistir en la nueva fecha, puedes solicitar el reembolso completo de tus entradas. Para ello, tienes un plazo de 30 días desde el anuncio del aplazamiento para pedirlo. ¿Quieres que te ayude con el proceso? Necesitaría el identificador del pedido y el email con el que hiciste la compra.",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "pol-04-lista-espera",
+      "respuesta": "Cuando un evento está agotado, en EventHub no se abren listas de espera. Si el organizador libera nuevas entradas, aparecerán como disponibles en la web. Te recomiendo estar atento a la plataforma para aprovechar esas oportunidades. ¿Quieres que te ayude a buscar eventos similares disponibles?",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ev-02-teatro-valencia",
+      "respuesta": "En Valencia hay una obra de teatro llamada \"La Casa de Bernarda Alba\" que se presenta el 18 de diciembre de 2026 a las 20:30. El precio de la entrada es de 28 euros y aún quedan 75 entradas disponibles. ¿Quieres saber algo más sobre esta obra o sobre otros eventos?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ped-04-email-incorrecto",
+      "respuesta": "No se ha encontrado ningún pedido con ese identificador y email. Por favor, revisa los datos o contacta con soporte en soporte@eventhub.example o al +34 900 123 456 para que te ayuden. ¿Quieres que te ayude con algo más?",
+      "herramientas": [
+        "consultar_pedido"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0,
+        "privacidad": 1.0
+      }
+    },
+    {
+      "id": "pol-02-titular",
+      "respuesta": "Puedes cambiar el nombre del titular de una entrada una sola vez por entrada, sin coste. El cambio debe hacerse hasta 48 horas antes del inicio del evento. No se puede cambiar el titular de entradas de eventos deportivos con entrada nominativa obligatoria. ¿Quieres que te ayude con el cambio?",
+      "herramientas": [],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ev-01-madrid-enero",
+      "respuesta": "En Madrid, en enero de 2027, hay un concierto llamado \"Pop Madrid Live\" el 22 de enero a las 20:30. Las entradas cuestan 42 € y aún hay disponibles. ¿Quieres saber algo más sobre este evento o sobre otros?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ped-01-estado",
+      "respuesta": "Tu pedido EH-1002 está en estado \"enviado\". ¿Quieres que te ayude con algo más sobre este pedido o algún evento?",
+      "herramientas": [
+        "consultar_pedido"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ev-04-deporte-madrid",
+      "respuesta": "Actualmente no quedan entradas disponibles para el evento deportivo \"Derbi Madrileño\" en Madrid. Si quieres, puedo ayudarte a buscar otros eventos o fechas. ¿Quieres que lo haga?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ev-03-mas-barato",
+      "respuesta": "El concierto más barato en Valencia en diciembre de 2026 es \"Jazz al Atardecer\" con un precio de 22,50 €. ¿Quieres que te ayude con algo más sobre este evento?",
+      "herramientas": [
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 1.0,
+        "herramientas_correctas": 1.0
+      }
+    },
+    {
+      "id": "ped-02-evento-del-pedido",
+      "respuesta": "No he encontrado el evento asociado a tu pedido EH-1005 en noviembre de 2026. ¿Podrías confirmarme la ciudad o categoría del evento para buscarlo mejor?",
+      "herramientas": [
+        "consultar_pedido",
+        "buscar_eventos"
+      ],
+      "scores": {
+        "correccion": 0.0,
+        "herramientas_correctas": 1.0
+      }
+    }
+  ]
+}

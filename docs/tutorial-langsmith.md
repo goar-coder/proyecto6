@@ -99,6 +99,8 @@ Para saber cuál tienes, la documentación da una pista visual: en un workspace 
    LANGSMITH_AGENT_ENVIRONMENT=development
    ```
 
+> **Lo que pasó en este proyecto.** El workspace es basado en agentes y estaba vacío. Con solo `LANGSMITH_PROJECT=eventhub-v4` (sin variables de agente), LangSmith **creó automáticamente el agente `eventhub-v4`** y las trazas llegaron, así que la opción de proyecto funciona como configuración de compatibilidad. La de agente es la que recomienda la documentación para workspaces nuevos.
+
 > **No combines las dos opciones.** Si defines a la vez las variables de agente y `LANGSMITH_PROJECT`, la traza tiene dos destinos y el SDK no elige: avisa al arrancar y no traza. La plantilla `.env.example` lleva las dos opciones, con la de agente comentada.
 
 Las variables de agente necesitan `langsmith>=0.14.9`. El proyecto usa la 0.15.1.
@@ -402,7 +404,7 @@ Comparación basada en cómo se ha integrado cada uno en este proyecto y en su d
 | No aparece ninguna traza | `LANGSMITH_TRACING` no es `true`, o `.env` no se cargó | Ejecuta desde el paquete instalado; comprueba la variable con `python -c "import os; from eventhub_v4.config import settings; print(os.getenv('LANGSMITH_TRACING'))"` |
 | Error de autenticación con una clave correcta | Región equivocada | Pon `LANGSMITH_ENDPOINT` de tu región (EU: `https://eu.api.smith.langchain.com`) |
 | Aviso al arrancar y ninguna traza | Están definidos a la vez `LANGSMITH_AGENT_ID`/`LANGSMITH_AGENT_ENVIRONMENT` y `LANGSMITH_PROJECT` | Deja solo una de las dos opciones (apartado 2.3) |
-| Workspace basado en agentes y las trazas no aparecen donde esperas | Se está usando `LANGSMITH_PROJECT` con un nombre inventado | Crea el agente y usa las variables de agente |
+| Workspace basado en agentes y las trazas no aparecen donde esperas | Hay otro agente o entorno con el mismo nombre, o la clave es de otro workspace | Revisa qué agente se creó a partir de `LANGSMITH_PROJECT`, o crea el agente y usa las variables de agente |
 | El agente no se puede crear por SDK | La clave es solo de trazado | Usa una clave con permiso para crear proyectos, o créalo desde la interfaz |
 | Un hilo no agrupa todos los turnos | Algún turno se lanzó sin la metadata `thread_id` | Invoca siempre el grafo con `config_langchain()` (lo hace `enviar()`) |
 | La evaluación aparece también en Langfuse | Se ejecutó otro script sin desactivar Langfuse | Usa `scripts/evaluar_langsmith.py`, que lo desactiva |
